@@ -28,13 +28,19 @@ In my own work, I aim to channel this spirit of experimentation and innovation, 
 
 Below are some images of the finished code from different angles and moments in the code:
 
+First image:
+
 ![2023-04-16 (17)](https://user-images.githubusercontent.com/122418286/232346200-63c3bed2-9546-4365-abf9-a704d71f90cd.png)
 
 After one click and zoomed out:
+
 ![2023-04-16 (20)](https://user-images.githubusercontent.com/122418286/232346209-84dc16a4-9499-46c6-a10d-d420463b0ea1.png)
 
 While clicking and zoomed out:
+
 ![2023-04-16 (21)](https://user-images.githubusercontent.com/122418286/232346229-9a729711-3832-43ce-91a1-5cd1aedd042c.png)
+
+
 
 
 
