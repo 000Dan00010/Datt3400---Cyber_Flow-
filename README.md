@@ -4,6 +4,7 @@
 ![2023-04-16 (1)](https://user-images.githubusercontent.com/122418286/232347243-dd0a4d54-9c61-4063-a2fe-b61525b999d6.png)
 
 How it works:
+
 This code is a p5.js sketch that creates an interactive 3D cube visualization that responds to music. The code starts by declaring variables for a camera, an array of cubes, noise scale, and a boolean to toggle between a dark and light background. The code also loads a music file using the loadSound() function in the preload() function and sets up a canvas with createCanvas() in the setup() function.
 
 Next, the code initializes the amplitude and Fast Fourier Transform (FFT) objects, which are used to analyze the music and determine the visual response. The createEasyCam() function is used to create a movable camera in the 3D space, and the document.oncontextmenu function is used to prevent the right-click menu from appearing.
@@ -40,7 +41,15 @@ While clicking and zoomed out:
 
 ![2023-04-16 (21)](https://user-images.githubusercontent.com/122418286/232346229-9a729711-3832-43ce-91a1-5cd1aedd042c.png)
 
+Half way throught the song top view:
 
+![2023-04-16 (212)](https://user-images.githubusercontent.com/122418286/232347459-7da66404-49f9-4c43-8d16-506167a00c4f.png)
+
+Side view:
+
+![2023-04-16 (3)](https://user-images.githubusercontent.com/122418286/232347492-4502eb11-f54b-4318-8804-876430f55a61.png)
+
+![2023-04-16 (6)](https://user-images.githubusercontent.com/122418286/232347500-4f5ee4db-eabc-4839-acfd-88ec0a0be491.png)
 
 
 
