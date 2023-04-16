@@ -1,208 +1,40 @@
 # Datt3400---Cyber_Flow-
-let cam;
 
-var cubes = [];
-var noiseS = 1
-var dark = true;
+![2023-04-16 (3)](https://user-images.githubusercontent.com/122418286/232347247-056c86d8-921f-4f5a-80d7-ad4fa155b37f.png)
+![2023-04-16 (1)](https://user-images.githubusercontent.com/122418286/232347243-dd0a4d54-9c61-4063-a2fe-b61525b999d6.png)
 
-let sound;
+How it works:
+This code is a p5.js sketch that creates an interactive 3D cube visualization that responds to music. The code starts by declaring variables for a camera, an array of cubes, noise scale, and a boolean to toggle between a dark and light background. The code also loads a music file using the loadSound() function in the preload() function and sets up a canvas with createCanvas() in the setup() function.
 
+Next, the code initializes the amplitude and Fast Fourier Transform (FFT) objects, which are used to analyze the music and determine the visual response. The createEasyCam() function is used to create a movable camera in the 3D space, and the document.oncontextmenu function is used to prevent the right-click menu from appearing.
 
-function preload() {
-  sound = loadSound('ytmp3free.cc_clean-bandit-x-elley-duhe-dont-leave-me-lonely-official-video-youtubemp3free.org.mp3');
-}
+The code then generates an array of cubes in a grid pattern using nested for-loops in the setup() function. The colors of the cubes are determined by the color() function, and the position and size of each cube are randomly generated. The cubes are stored in the cubes array.
 
-function setup() {
-  createCanvas(500, 500, WEBGL);
-  amplitude = new p5.Amplitude();
-  sound.loop();
-  sound.play();
-  
-  fft = new p5.FFT();
-  
-  createEasyCam();
-  document.oncontextmenu = ()=>false;
-  var unitS = width/20;
-  //ortho(-width / 2, width / 2, -height / 2, height / 2, 0, 5000);
-  
-  //consider removing
-  /*
-  for(let i=0; i<1; i++){
-   let col = color(255, 200);//255
-    let cube = new Cube(0, createVector(random(-width/2, width/2), random(-height/2, height/2), random(-width*2, width/2)), col, height/400);
-      cubes.push(cube);
-  }
-  */
-  
-  for(let x=-width/2; x<width/2; x+=unitS){
-    for(let y=-width*2; y<width/2; y+=unitS){
-    colorMode(RGB);
-      let col = color(((y/width+2)*255/2.5)%255, 255, 255, 200);
-      //let col = color(255, 200);
-     if(random(10) < 1){
-      let v = random(100, 0);
-       col = color(255, v, v, 255);
-     }
-      //if(random(10) < 1){
-       //let v = random(100, 0);
-       // col = color(v, v, 255, 255);
-     // }
-       //if(random(10) < 1){
-         //let v = random(255, 0);
-         //col = color(255, 230, v, 255);
-      //}
-       if(random(10) < 1){
-         let v = random(255, 0);
-        col = color(v, 255, v, 255);
-       }
-      let cube = new Cube(random(unitS*2), createVector(x, height/2, y), col,random(height/100));
-      cubes.push(cube);
-      cube = new Cube(random(unitS*2), createVector(x, -height/2, y), col,random(height/100));
-      cubes.push(cube);
-    }
-  }
-  
-}
+In the draw() function, the background color is set based on the dark boolean variable, and the amplitude of the music is obtained using the amplitude.getLevel() function. The fft.analyze() function is used to obtain the spectrum of the music, which is used to determine the size of each cube. The show() and update() methods of each cube are called to display and animate the cubes.
 
-function draw() {
-  
-  print(frameRate());
-  
- perspective(PI / 4.0);
-  //camera(-width/2, -height, -width/2, 0, 0, 0, 0, 1, 0);
-  let level = amplitude.getLevel();
-  let size = map(level, 0, 1, 0, 200);
-    box(size,size,size);
-  
-  fill(255, 200);
-  background(225);
-  if(dark)background(0);//220
-  
-  let spectrum = fft.analyze();
-  //print(spectrum.length);
+The mousePressed() function is used to change the background color and randomly move the cubes when the mouse is clicked. The mouseReleased() function is used to set the background color back to the original state when the mouse is released.
 
-  
-  for(let i=0; i<cubes.length; i++){
-  
+Finally, a Cube class is defined, which contains the properties and methods for each cube object. The constructor() function initializes the size, position, color, and stroke weight of the cube, and the show() and update() functions determine how the cube is displayed and animated.
 
-  let level = amplitude.getLevel();
-    let index = map(i,0,cubes.length,0,spectrum.length);
-  //let size = map(level, 0, 1, 0, 200);
-    
-    let size = 0;
-    
-    let cube = cubes[i];
-    cube.update();
-    cube.show(spectrum[int(index)*0.5]);
-    
-    
-    //box(size,size,size);
+My inspiration:
 
-}
+The genesis of my project can be traced back to the two groundbreaking art movements of the early 20th century, namely Cubism and Futurism. These two styles of art revolutionized the way artists perceived and represented reality, moving away from the traditional techniques of realism and naturalism towards an abstract and geometric approach. One of the most iconic shapes that these movements employed in their art was the cube, which served as a symbol of the dynamism, complexity, and fragmentation of modern life.
 
-function togglePlay() {
-  if (sound.isPlaying() ){
-    sound.pause();
-  } else {
-    sound.loop();
-		amplitude = new p5.Amplitude();
-		amplitude.setInput(sound);
-  }
-}
-  
-}
+It is this innovative use of the cube shape that has inspired me to undertake this project. The cube, with its clean lines, sharp edges, and precise angles, embodies a sense of order and structure that is both visually striking and conceptually profound. Moreover, its three-dimensional nature allows for an exploration of space and perspective that is unique to the medium of sculpture.
 
-function mousePressed() {
-  dark = false;
-  noiseS = random(0.5, 2); // randomly change the noise scale
-  for (let i = 0; i < cubes.length; i++) {
-    let cube = cubes[i];
-    let d = dist(cube.pos.x, cube.pos.y, mouseX, mouseY);
-    if (d < cube.size/2) { // check if the mouse is over the cube
-      cubes.splice(i, 1); // remove the cube from the array
-      i--;
-    } else {
-      cube.pos.x += random(-width/4, width/4); // randomly change the x position
-      cube.pos.y += random(-height/4, height/4); // randomly change the y position
-    }
-  }
-}
+As I delve deeper into the principles of Cubism and Futurism, I am fascinated by how these art forms sought to break down the conventions of representation and create new forms of visual language. By utilizing the cube in various ways, such as fragmentation, reassembly, and superimposition, these artists were able to challenge the viewer's perceptions and offer a fresh perspective on the world around them.
+
+In my own work, I aim to channel this spirit of experimentation and innovation, using the cube as a starting point for exploring new possibilities in sculpture. By manipulating the cube shape through cutting, folding, and welding, I hope to create dynamic and visually engaging pieces that offer a unique perspective on space, form, and texture. Ultimately, my goal is to create a body of work that honors the legacy of Cubism and Futurism while pushing the boundaries of what is possible in contemporary sculpture.
+
+Below are some images of the finished code from different angles and moments in the code:
+
+![2023-04-16 (17)](https://user-images.githubusercontent.com/122418286/232346200-63c3bed2-9546-4365-abf9-a704d71f90cd.png)
+
+After one click and zoomed out:
+![2023-04-16 (20)](https://user-images.githubusercontent.com/122418286/232346209-84dc16a4-9499-46c6-a10d-d420463b0ea1.png)
+
+While clicking and zoomed out:
+![2023-04-16 (21)](https://user-images.githubusercontent.com/122418286/232346229-9a729711-3832-43ce-91a1-5cd1aedd042c.png)
 
 
-function mousePressed() {
-  dark = false;
-}
 
-function mouseReleased() {
-  dark = true;
-
-}
-function mousePressed() {
-  dark = false;
- noiseS = random(0.5, 2); // randomly change the noise scale
-  for (let i = 0; i < cubes.length; i++) {
-    let cube = cubes[i];
-    cube.pos.x += random(-width/4, width/4); // randomly change the x position
-   cube.pos.y += random(-height/4, height/4); // randomly change the y position
-}
-
-}
-
-
-class Cube {
-  constructor(size, pos, col, sw) {
-    this.size = size
-    this.pos = pos
-    this.off = createVector(0, 0, 0);
-    this.col = col;//color
-    this.sw = sw;//stroke weight
-  }
-
-  update(amp) {
-    let noiseS = map(amp, 0, 1, 0.5, 3); // map amplitude to noise scale
-    let zoff = noise(this.pos.x / width / noiseS, this.pos.z / width / noiseS, frameCount / 100.0) * TWO_PI;
-    
-    //commented out - try and revise or fix
-    
-    //this.pos.add(p5.Vector.fromAngle(zoff).mult(amp * 50)); // use amplitude to change movement range
-    
-    
-    this.pos.z += 30;
-    if (this.pos.z > width / 2) {
-      this.off.x = (mouseX - width / 2) * 0.7;
-      this.off.y = (mouseY - height / 2) * 0.7;
-      this.pos.z = -width * 2;
-    
-    }
-  }
-  
-  show(sizeupdate){
-    fill(this.col);
-    if(green(this.col) == 255 && dark)fill(0, 200);
-    push();
-    if(green(this.sw) == 255 && dark)fill(0, 200);
-    stroke(0);//0
-    if(dark)stroke(255, 200);
-    strokeWeight(0.2);
-    rotate(PI/2);
-    rotate(frameCount/500.0);
-    let zoff = noise(this.pos.x/width/noiseS, this.pos.z/width/noiseS, frameCount/100.0)*height/4-height/8
-    
-    let x = this.pos.x+this.off.x;
-    let y = this.pos.y+this.off.y+zoff;
-    let z = this.pos.z;
-    
-    translate(x,y,z);
-    box(sizeupdate);
-    strokeWeight(30);
-    scale(1);
-  box(sizeupdate/1.5);
-    pop(50);
-  }
-}
-
-function keyPressed() {
-  if (key === 's') {
-    setup();
-  }
-}
